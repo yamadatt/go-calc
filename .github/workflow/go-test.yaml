@@ -1,0 +1,28 @@
+name: Go Test
+
+on:
+  push:
+    branches:
+      - main  # mainブランチへのプッシュ時に実行
+  pull_request:
+    branches:
+      - main  # mainブランチへのプルリクエスト時に実行
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Ubuntuの最新バージョンで実行
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4  # コードをチェックアウト
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.1'  # 使用するGoのバージョンを指定
+
+      - name: Install dependencies
+        run: go mod tidy  # 依存関係をインストール
+
+      - name: Run tests
+        run: go test -v ./...  # すべてのテストを実行
